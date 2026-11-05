@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+  --font-display: "Cairo", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+
+  /* Brand — deep petrol teal */
+  --color-brand-50: #f0f9fa;
+  --color-brand-100: #dcf0f2;
+  --color-brand-200: #bce1e6;
+  --color-brand-300: #8ecad3;
+  --color-brand-400: #59abb6;
+  --color-brand-500: #3b8f9b;
+  --color-brand-600: #2f7683;
+  --color-brand-700: #2c5f6b;
+  --color-brand-800: #2c4f59;
+  --color-brand-900: #2a424b;
+  --color-brand-950: #0b2b33;
+
+  /* Accent — vivid ember orange (from original brand #fe4c1c) */
+  --color-accent-50: #fff4ed;
+  --color-accent-100: #ffe6d5;
+  --color-accent-200: #feccaa;
+  --color-accent-300: #fdab74;
+  --color-accent-400: #fb8040;
+  --color-accent-500: #f95d16;
+  --color-accent-600: #ea470c;
+  --color-accent-700: #c2320c;
+  --color-accent-800: #9a2912;
+  --color-accent-900: #7c2512;
+  --color-accent-950: #431007;
+
+  /* Surfaces */
+  --color-sand-50: #f7f8f7;
+  --color-sand-100: #eef1ef;
+  --color-sand-200: #e2e7e3;
+  --color-night-800: #12272d;
+  --color-night-850: #0e2026;
+  --color-night-900: #0a181d;
+  --color-night-950: #060f13;
+
+  --shadow-card: 0 1px 2px rgb(11 43 51 / 0.05), 0 8px 24px -12px rgb(11 43 51 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(11 43 51 / 0.06), 0 20px 44px -16px rgb(11 43 51 / 0.28);
+  --shadow-glow: 0 0 0 1px rgb(251 128 64 / 0.25), 0 12px 40px -8px rgb(249 93 22 / 0.45);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 10s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--color-sand-50);
+  color: #16262c;
+  overflow-x: hidden;
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+.dark body {
+  background-color: var(--color-night-950);
+  color: #e6eff1;
+}
+
+::selection {
+  background: var(--color-accent-500);
+  color: #fff;
+}
+
+/* Refined scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-brand-400), var(--color-brand-700));
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Visible focus for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--color-accent-400);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Subtle blueprint grid backdrop */
+.bg-blueprint {
+  background-image:
+    linear-gradient(to left, rgb(59 143 155 / 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(59 143 155 / 0.10) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 30%, transparent 75%);
+}
+.dark .bg-blueprint {
+  background-image:
+    linear-gradient(to left, rgb(142 202 211 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(142 202 211 / 0.07) 1px, transparent 1px);
+}
+
+/* Dotted texture for dark sections */
+.bg-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-accent-400), var(--color-accent-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .text-gradient {
+  background: linear-gradient(120deg, #ffb287, var(--color-accent-400));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Animated link underline */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[dir="rtl"] .link-underline::after { transform-origin: right; }
+.link-underline:hover::after,
+.link-underline[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Image treatment */
+.img-frame {
+  background: linear-gradient(135deg, var(--color-brand-100), #fff);
+  padding: 6px;
+  border-radius: 1.25rem;
+}
+.dark .img-frame {
+  background: linear-gradient(135deg, #1d3a43, #0e2026);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

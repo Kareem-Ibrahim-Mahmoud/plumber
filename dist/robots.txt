@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://plumber-in-kuwait.vercel.app/sitemap.xml
